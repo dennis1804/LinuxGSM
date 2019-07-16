@@ -1214,6 +1214,17 @@ fn_info_message_barotrauma(){
 		echo -e "> Query\tINBOUND\t$((port+1))\tudp"
 	} | column -s $'\t' -t
 }
+fn_info_message_ac(){
+	echo -e "netstat -atunp | grep acServer"
+	echo -e ""
+	{
+		echo -e "DESCRIPTION\tDIRECTION\tPORT\tPROTOCOL"
+		echo -e "> Game\tINBOUND\t${port}\ttcp"
+		echo -e "> Query\tINBOUND\t${queryport}\tudp"
+		echo -e "> Rcon\tINBOUND\t${rconport}\ttcp"
+	} | column -s $'\t' -t
+}
+
 
 
 fn_info_message_select_engine(){
@@ -1326,6 +1337,8 @@ fn_info_message_select_engine(){
 		fn_info_message_unreal
 	elif [ "${engine}" == "unreal3" ]; then
 		fn_info_message_unreal3
+	elif [ "$(gamename)" == "Assetto Corsa"]; then
+		fn_info_message_ac
 	else
 		fn_print_error_nl "Unable to detect server engine."
 	fi
